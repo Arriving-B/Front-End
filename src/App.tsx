@@ -1,8 +1,8 @@
-import './App.css'
-import Header from './components/header/header.tsx'
+import 'App.css'
+import Header from 'components/header/Header.tsx'
 
 function App() {
-  return <Header></Header>
+  return <Header />
 }
 
 export default App

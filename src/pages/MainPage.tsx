@@ -1,6 +1,6 @@
+import Header from 'components/header/Header.tsx'
+import ArrivingBusList from 'components/mainPage/ArrivingBusList'
 import styled from 'styled-components'
-import Header from '../components/header/header'
-import ArrivingBusList from '../components/mainpage/ArrivingBusList'
 
 const Background = styled.div`
   display: flex;
@@ -74,7 +74,7 @@ const ContainerCurrentBusStop = styled.div`
   flex-direction: column;
   justify-content: center;
 `
-const CurrentBusStopname = styled.h1`
+const CurrentBusStopName = styled.h1`
   font-size: 20px;
   font-weight: bold;
 `
@@ -102,22 +102,12 @@ const WaitingTime = styled.p`
   flex-direction: column;
   align-items: center;
 `
+const Bus = styled.p<{ color: 'green' | 'red' | 'blue' }>`
+  color: ${(props) => props.color};
+  font-size: 20px;
+  font-weight: bold;
+`
 
-const BlueBus = styled.p`
-  color: blue;
-  font-size: 20px;
-  font-weight: bold;
-`
-const RedBus = styled.p`
-  color: red;
-  font-size: 20px;
-  font-weight: bold;
-`
-const GreenBus = styled.p`
-  color: green;
-  font-size: 20px;
-  font-weight: bold;
-`
 const WaitMinute = styled.p`
   color: white;
   font-size: 15px;
@@ -131,14 +121,14 @@ function MainPage() {
         <MapStationList>
           <BusList>
             <BusArriveInfo>
-              <GreenBus>55 </GreenBus>
+              <Bus color="green">55 </Bus>
               <WaitMinute> 8분</WaitMinute>
             </BusArriveInfo>
           </BusList>
           <MapStation>
             <ContainerCurrentBusStop>
               <CurrentBusStop>현재 정류장</CurrentBusStop>
-              <CurrentBusStopname>거여역6번출구</CurrentBusStopname>
+              <CurrentBusStopName>거여역6번출구</CurrentBusStopName>
             </ContainerCurrentBusStop>
             <Map>
               <Mapinfo>
