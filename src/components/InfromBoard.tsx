@@ -5,14 +5,22 @@ import styled from "styled-components";
 const MainBoard = styled.div`
     margin : 50px auto 0 auto;
     background-color:white;
-    width : 1200px;
+    width : 1100px;
     height : 600px;
     border-radius:20px;
     display:flex;
-    flex-direction:row;
-    justify-content:center;
+    flex-direction:column;
 `
+const BoardCenter = styled.div`
+    margin-top : 50px;
+    width :100%;
+    height : 500px;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    border-radius : 0 0 20px 20px;
 
+`
 // 보드 상단 backBoard
 const BoardTopBackground= styled.div`
     background-color: #252527;
@@ -22,6 +30,7 @@ const BoardTopBackground= styled.div`
     display:flex;
     flex-direction:row;
     justify-content:center;
+    top:0;
 `
 
 //보드의 가운데 블럭
@@ -57,16 +66,15 @@ const SubStationInfomTextBox= styled.h3`
     height: 30px;
     margin : 10px 0 10px 0;
 `
-
-
 interface InfromBorardProps{
     titleWidth : number
     leftSubText: string
     midText: string
     rightSubText : string
+    children?: React.ReactNode
 }
 
-const InfromBoard : React.FC<InfromBorardProps>= ({ titleWidth, leftSubText, midText, rightSubText })=>{
+const InfromBoard : React.FC<InfromBorardProps>= ({ titleWidth, leftSubText, midText, rightSubText, children })=>{
     let subWidth : number = (100-titleWidth)/2;
     return (
         <MainBoard>
@@ -83,8 +91,10 @@ const InfromBoard : React.FC<InfromBorardProps>= ({ titleWidth, leftSubText, mid
                     <SubStationInfomTextBox> {rightSubText} </SubStationInfomTextBox>
                 </BoardTopBetween>
             </BoardTopBackground>
+            <BoardCenter>
+                {children}
+            </BoardCenter>
         </MainBoard>
-
     )
 }
 

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import searchIcon from "../../assets/header/search_icon.png"
-import mainIcon from "../../assets/header/main_icon.png"
-import settingButton from "../../assets/header/setting_icon.png"
-import gpsIconOff from "../../assets/header/Gps_icon_off.png"
-import gpsIconOn from "../../assets/header/Gps_icon_on.png"
-import resetIcon from "../../assets/header/reset_icon.png"
+import React,{ useState } from "react"
+import styled from "styled-components"
+import searchIcon from "assets/header/search_icon.png"
+import mainIcon from "assets/header/main_icon.png"
+import settingButton from "assets/header/setting_icon.png"
+import gpsIconOff from "assets/header/gps_icon_off.png"
+import gpsIconOn from "assets/header/gps_icon_on.png"
+import resetIcon from "assets/header/reset_icon.png"
 
 
 const HeaderComponent = styled.div`
@@ -18,7 +18,7 @@ const HeaderComponent = styled.div`
     align-items:center;
     top:0;
 `
-const HeaderLeftCompoent = styled.div`
+const HeaderLeftComponent = styled.div`
     width:50%;
     margin-right:5%;
     margin-left:clamp(5px,5%,5%);
@@ -75,7 +75,7 @@ const BigLocationTextBox = styled.h6`
 const ResetButton = styled.span`
     margin-right:8px;
     width: 20px;height:20px;
-    positioin : relative;
+    position : relative;
     border-radius: 20px;
     background-color:transparent;
     display:flex;
@@ -88,7 +88,7 @@ const ResetButton = styled.span`
 `
 const GpsButton = styled.span`
     width: 30px;height:30px;
-    positioin : relative;
+    position : relative;
     border-radius: 100px;
     margin-left:clamp(5px,7px,10px);
     display:flex;
@@ -149,13 +149,11 @@ const SettingButton = styled.span`
 
 
 function Header(){
-    const [Gps,IsGpsOn]=useState(true);
-    const handleClick = ()=>{
-        IsGpsOn(!Gps)
-    }
+    const [isGps,setIsGps]=useState<boolean>(true)
+    const handleGps = ()=> setIsGps(!isGps)
     return(
         <HeaderComponent>
-            <HeaderLeftCompoent>
+            <HeaderLeftComponent>
                 <MainIcon>
                     <img src={mainIcon}/>
                 </MainIcon>
@@ -172,10 +170,10 @@ function Header(){
                       <img src = {resetIcon}/>
                     </ResetButton>
                 </LocationBox> 
-                <GpsButton onClick={handleClick}>
-                    <img src={Gps?gpsIconOn:gpsIconOff}/>
+                <GpsButton onClick={handleGps}>
+                    <img src={isGps?gpsIconOn:gpsIconOff}/>
                 </GpsButton>
-            </HeaderLeftCompoent>
+            </HeaderLeftComponent>
             <HeaderRightComponent>
                 <SearchBox>
                     <SearchTextBox>
@@ -191,4 +189,4 @@ function Header(){
     )
 }
 
-export default Header
+export default Header;
