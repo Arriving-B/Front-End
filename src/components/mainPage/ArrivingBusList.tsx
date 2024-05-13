@@ -1,3 +1,4 @@
+import busIcon from 'assets/mainpage/bus.png'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -48,8 +49,8 @@ const IInnerContainer2 = styled.div`
   align-items: end;
 `
 
-const BusNum = styled.p`
-  color: red;
+const BusNum = styled.p<{ busColor: string }>`
+  color: ${(props) => props.busColor};
   font-size: 1.6rem;
   font-weight: bold;
 `
@@ -90,10 +91,10 @@ const InnerContainerUnderRight = styled.div`
   align-items: center;
 `
 const RouteNavigationContainer = styled.div`
+  position: relative;
   background-color: transparent;
-  width: 95%;
+  width: 100%;
   height: 70%;
-  border-radius: 10px;
   display: flex;
   flex-direction: row;
 `
@@ -115,11 +116,43 @@ const Node = styled.div`
   }
 `
 const NodePoint = styled.div<{ nodeColor: string }>`
-  width: 25px;
-  height: 25px;
+  width: 24px;
+  height: 24px;
   background-color: white;
   border: solid 5px ${(props) => props.nodeColor};
   border-radius: 100%;
+  z-index: 1;
+`
+const NodeWay = styled.div`
+  position: absolute;
+  width: 74%;
+  height: 10px;
+  bottom: 10%;
+  left: 12%;
+  background-color: white;
+  border: solid 5px #44d044;
+  z-index: 0;
+`
+const IncomeBusWay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+`
+const IncomeBus = styled.img<{ stationLeft: number }>`
+  position: relative;
+  width: 20px;
+  height: 20px;
+  // 75% 50% 25% 0%
+  left: calc(37.5% - ${(props) => (3 - (props.stationLeft || 3.15)) * 25}%);
+  background-color: #f25555;
+  outline: solid 1px #f25555;
+  border-radius: 100%;
+  z-index: 2;
 `
 
 function ArrivingBusList() {
@@ -127,7 +160,7 @@ function ArrivingBusList() {
     <Container>
       <InnerContainerUp>
         <BusNumBox>
-          <BusNum>5500</BusNum>
+          <BusNum busColor={'#F72F08'}>5500</BusNum>
         </BusNumBox>
         <IInnerContainer2>
           <BoundFor>거여역3번출구.현대2차아파트 방면</BoundFor>
@@ -153,6 +186,10 @@ function ArrivingBusList() {
             <Node>
               <NodePoint nodeColor={'#55d055'} />
             </Node>
+            <NodeWay />
+            <IncomeBusWay>
+              <IncomeBus src={busIcon} stationLeft={3} />
+            </IncomeBusWay>
           </RouteNavigationContainer>
         </InnerContainerUnderRight>
       </InnerContainerUnder>

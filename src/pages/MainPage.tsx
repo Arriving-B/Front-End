@@ -7,7 +7,7 @@ const Background = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 70px;
+  margin-top: 7vh;
 `
 const BusListArriveSoon = styled.div`
   margin: 40px;
@@ -21,6 +21,21 @@ const BusListArriveSoon = styled.div`
   justify-content: start;
   border-radius: 20px;
   overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #f2f2ff, #e0e0e0);
+    border: 3px solid white;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    margin-block: 10px;
+    height: 100%;
+    border-radius: 10px;
+  }
 `
 const MapStationList = styled.div`
   margin: 40px;
