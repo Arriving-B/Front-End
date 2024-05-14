@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import Swal from 'sweetalert2'
 
+
 const HeaderComponent = styled.div`
   position: fixed;
   background-color: #252527;
@@ -52,24 +53,26 @@ const LocationBox = styled.div`
   text-align: center;
 `
 const LocationTextBox = styled.div`
-  width: 175px;
-  height: 40px;
-  margin: 0 0 0 25px;
-  color: black;
-  font-size: x-small;
-  text-align: center;
+    width: 175px;
+    height: 40px;
+    margin: 0 0 0 25px;
+    color:black;
+    font-size:x-small;
+    text-align :center;
+
 `
 const LittleLocationTextBox = styled.p`
-  height: 20px;
-  margin-block-start: 0;
-  margin: 0;
-  font-size: x-small;
+    height: 20px;
+    margin-block-start : 0;
+    margin: 0;
+    font-size:x-small;
+
 `
 const BigLocationTextBox = styled.h6`
-  height: 20px;
-  margin-block-start: 0;
-  margin: 0;
-  font-size: small;
+    height: 20px;
+    margin-block-start : 0;
+    margin: 0;
+    font-size:small;
 `
 const ResetButton = styled.span`
   margin-right: 8px;
@@ -138,12 +141,13 @@ const GpsButton = styled.span`
   }
 `
 
+
 const HeaderRightComponent = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-left: 150px;
+    width:50%;
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    border-left:150px;
 `
 
 const SearchBox = styled.div`
@@ -320,4 +324,4 @@ function Header(): React.JSX.Element {
   )
 }
 
-export default Header
+export default Header;
