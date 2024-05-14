@@ -32,6 +32,7 @@ const MainIcon = styled.span`
   width: 50px;
   height: 50px;
   margin: 0 30px 0 10%;
+  cursor: pointer;
   & img {
     width: 50px;
     height: 50px;
@@ -200,7 +201,7 @@ const SettingButton = styled.div`
 const SideMenuBar = styled.div<{ rightlocation: number }>`
   width: 240px;
   height: 14%;
-  background: #222;
+  background: transparent;
   position: fixed;
   top: 10vh;
   right: ${(props) => props.rightlocation}px;
@@ -209,13 +210,16 @@ const SideMenuBar = styled.div<{ rightlocation: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
 `
 
 const SendFeedbackButton = styled.button`
   width: 50%;
   height: 30%;
-  background: white;
-  color: skyblue;
+  background: #252527;
+  margin-left: 33px;
+  color: white;
+  font-weight: bold;
   font-size: 10px;
 `
 
@@ -259,11 +263,19 @@ function Header(): React.JSX.Element {
           toast.addEventListener('mouseleave', Swal.resumeTimer)
         },
       })
-
-      Toast.fire({
-        icon: 'success',
-        title: `${result.value}이 정상적으로 입력됨`,
-      })
+      if (result.isConfirmed) {
+        if (result.value !== '') {
+          Toast.fire({
+            icon: 'success',
+            title: `${result.value}이 정상적으로 입력됨`,
+          })
+        } else {
+          Toast.fire({
+            icon: 'error',
+            title: `피드백 내용이 없어 입력되지 않음`,
+          })
+        }
+      }
     })
   }
 
@@ -273,6 +285,7 @@ function Header(): React.JSX.Element {
         <MainIcon>
           <img src={mainIcon} />
         </MainIcon>
+
         <LocationBox>
           <LocationTextBox>
             <LittleLocationTextBox>가장 가까운 정류장</LittleLocationTextBox>
