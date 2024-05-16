@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios'
 import Header from 'components/header/Header.tsx'
 import ArrivingBusList from 'components/mainPage/ArrivingBusList'
@@ -129,15 +130,13 @@ const WaitMinute = styled.p`
 `
 
 function MainPage() {
-  const [apiUrl, setApiUrl] = useState<string>('http://localhost:8080/api/v1')
+  const [apiUrl] = useState<string>('http://localhost:8080/api/v1')
   const { station } = useStationStore()
   const { buses, setBuses, addBus } = useBusListStore()
 
-  const [cityCode, setCityCode] = useState<number>(31250)
-
   const handleGetBus = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/bus?stationId=${station.id}&cityCode=${cityCode}`)
+      const response = await axios.get(`${apiUrl}/bus?stationId=${station.id}&cityCode=${station.cityCode}`)
       const data = response.data.data.bus_list
       setBuses([])
       Object.keys(data).forEach((key) => {
