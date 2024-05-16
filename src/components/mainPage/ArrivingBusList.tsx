@@ -1,4 +1,5 @@
 import busIcon from 'assets/mainpage/bus.png'
+import { useBusListStore } from 'store/busListStore'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -156,44 +157,52 @@ const IncomeBus = styled.img<{ stationLeft: number }>`
 `
 
 function ArrivingBusList() {
-  return (
-    <Container>
-      <InnerContainerUp>
-        <BusNumBox>
-          <BusNum busColor={'#F72F08'}>5500</BusNum>
-        </BusNumBox>
-        <IInnerContainer2>
-          <BoundFor>거여역3번출구.현대2차아파트 방면</BoundFor>
-        </IInnerContainer2>
-      </InnerContainerUp>
+  const { buses } = useBusListStore()
 
-      <InnerContainerUnder>
-        <WaitMinBox>
-          <WaitMin>6분 후 도착</WaitMin>
-        </WaitMinBox>
-        <InnerContainerUnderRight>
-          <RouteNavigationContainer>
-            <Node>
-              <p>거여역6번출구</p>
-              <NodePoint nodeColor={'#f25555'} />
-            </Node>
-            <Node>
-              <NodePoint nodeColor={'#55d055'} />
-            </Node>
-            <Node>
-              <NodePoint nodeColor={'#55d055'} />
-            </Node>
-            <Node>
-              <NodePoint nodeColor={'#55d055'} />
-            </Node>
-            <NodeWay />
-            <IncomeBusWay>
-              <IncomeBus src={busIcon} stationLeft={3} />
-            </IncomeBusWay>
-          </RouteNavigationContainer>
-        </InnerContainerUnderRight>
-      </InnerContainerUnder>
-    </Container>
+  return (
+    <>
+      {buses.map((bus) => (
+        <Container>
+          <InnerContainerUp>
+            <BusNumBox>
+              <BusNum busColor={bus.color}>{bus.num}</BusNum>
+            </BusNumBox>
+            <IInnerContainer2>
+              <BoundFor>거여역3번출구.현대2차아파트 방면</BoundFor>
+            </IInnerContainer2>
+          </InnerContainerUp>
+
+          <InnerContainerUnder>
+            <WaitMinBox>
+              <WaitMin>{bus.remainingTime != -1 ? `${bus.remainingTime}분 후 도착` : `도착 정보 없음`}</WaitMin>
+            </WaitMinBox>
+            <InnerContainerUnderRight>
+              <RouteNavigationContainer>
+                <Node>
+                  <p>거여역6번출구</p>
+                  <NodePoint nodeColor={'#f25555'} />
+                </Node>
+                <Node>
+                  <NodePoint nodeColor={'#55d055'} />
+                </Node>
+                <Node>
+                  <NodePoint nodeColor={'#55d055'} />
+                </Node>
+                <Node>
+                  <NodePoint nodeColor={'#55d055'} />
+                </Node>
+                <NodeWay />
+                {bus.stationsLeft != -1 && (
+                  <IncomeBusWay>
+                    <IncomeBus src={busIcon} stationLeft={bus.stationsLeft > 3 ? 3.15 : bus.stationsLeft} />
+                  </IncomeBusWay>
+                )}
+              </RouteNavigationContainer>
+            </InnerContainerUnderRight>
+          </InnerContainerUnder>
+        </Container>
+      ))}
+    </>
   )
 }
 
