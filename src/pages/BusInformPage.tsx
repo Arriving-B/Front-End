@@ -1,11 +1,12 @@
 import BusInformBox from 'components/BusInform/SmallInformBox.tsx'
 import InfromBoard from 'components/InfromBoard.tsx'
+import Header from 'components/header/Header.tsx'
 import styled from 'styled-components'
 
 const MainContainer = styled.div`
   background-color: white;
-  width: 90vw;
-  height: 50vh;
+  width: 1000px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,40 +55,43 @@ const NextArriveMinute = styled.h4`
 `
 function BusInform() {
   return (
-    <InfromBoard titleWidth={30} leftSubText="나는 공부시" midText="어쩌구저쩌구" rightSubText="나는 잠들다">
-      <MainContainer>
-        <LittleBoxComponent>
-          <AtomBoxComponentLeft>
-            <BusInformBox isLeft={true} stringInBox={'기점'} stringNextToBox={'정지'}></BusInformBox>
-          </AtomBoxComponentLeft>
-          <AtomBoxComponentMid />
-          <AtomBoxComponentRight>
-            <BusInformBox isLeft={false} stringInBox={'종점'} stringNextToBox="지정"></BusInformBox>
-          </AtomBoxComponentRight>
-        </LittleBoxComponent>
-        <BusNotionBox />
-        <LittleBoxComponent>
-          <AtomBoxComponentLeft>
-            <BusInformBox isLeft={true} stringInBox={'첫차'} stringNextToBox={'04:20'}></BusInformBox>
-          </AtomBoxComponentLeft>
-          <AtomBoxComponentMid>
-            <NextArriveMinute>6분후 도착</NextArriveMinute>
-          </AtomBoxComponentMid>
-          <AtomBoxComponentRight>
-            <BusInformBox isLeft={false} stringInBox={'평일배차간격'} stringNextToBox={'12m'}></BusInformBox>
-          </AtomBoxComponentRight>
-        </LittleBoxComponent>
-        <LittleBoxComponent>
-          <AtomBoxComponentLeft>
-            <BusInformBox isLeft={true} stringInBox={'막차'} stringNextToBox={'00:20'}></BusInformBox>
-          </AtomBoxComponentLeft>
-          <AtomBoxComponentMid />
-          <AtomBoxComponentRight>
-            <BusInformBox isLeft={false} stringInBox={'주말배차간격'} stringNextToBox={'12m'}></BusInformBox>
-          </AtomBoxComponentRight>
-        </LittleBoxComponent>
-      </MainContainer>
-    </InfromBoard>
+    <div>
+      <Header />
+      <InfromBoard titleWidth={30} leftSubText="나는 공부시" midText="어쩌구저쩌구" rightSubText="나는 잠들다">
+        <MainContainer>
+          <LittleBoxComponent>
+            <AtomBoxComponentLeft>
+              <BusInformBox isLeft={true} stringInBox={'기점'} stringNextToBox={'정지'}></BusInformBox>
+            </AtomBoxComponentLeft>
+            <AtomBoxComponentMid />
+            <AtomBoxComponentRight>
+              <BusInformBox isLeft={false} stringInBox={'종점'} stringNextToBox="지정"></BusInformBox>
+            </AtomBoxComponentRight>
+          </LittleBoxComponent>
+          <BusNotionBox />
+          <LittleBoxComponent>
+            <AtomBoxComponentLeft>
+              <BusInformBox isLeft={true} stringInBox={'첫차'} stringNextToBox={'04:20'}></BusInformBox>
+            </AtomBoxComponentLeft>
+            <AtomBoxComponentMid>
+              <NextArriveMinute>6분후 도착</NextArriveMinute>
+            </AtomBoxComponentMid>
+            <AtomBoxComponentRight>
+              <BusInformBox isLeft={false} stringInBox={'평일배차간격'} stringNextToBox={'12m'}></BusInformBox>
+            </AtomBoxComponentRight>
+          </LittleBoxComponent>
+          <LittleBoxComponent>
+            <AtomBoxComponentLeft>
+              <BusInformBox isLeft={true} stringInBox={'막차'} stringNextToBox={'00:20'}></BusInformBox>
+            </AtomBoxComponentLeft>
+            <AtomBoxComponentMid />
+            <AtomBoxComponentRight>
+              <BusInformBox isLeft={false} stringInBox={'주말배차간격'} stringNextToBox={'12m'}></BusInformBox>
+            </AtomBoxComponentRight>
+          </LittleBoxComponent>
+        </MainContainer>
+      </InfromBoard>
+    </div>
   )
 }
 

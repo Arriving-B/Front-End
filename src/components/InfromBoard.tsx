@@ -5,8 +5,8 @@ import styled from 'styled-components'
 const MainBoard = styled.div`
   margin: 50px auto 0 auto;
   background-color: white;
-  width: 75vw;
-  height: 80vh;
+  width: 1100px;
+  height: 600px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
