@@ -1,7 +1,9 @@
-import styled from "styled-components";
-import Header from "src/components/header/Header.tsx";
-import InfromBoard from "src/components/InfromBoard.tsx";
-import BusInformBox from "src/components/BusInform/SmallInformBox.tsx";
+import styled from "styled-components"; 
+import Header from "components/header/Header.tsx";
+import InfromBoard from "components/InfromBoard.tsx";
+import BusInformBox from "components/BusInform/SmallInformBox.tsx";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const MainContainer = styled.div`
     background-color : white;
@@ -45,56 +47,97 @@ const AtomBoxComponentRight = styled.div`
     
 `
 const BusNotionBox = styled.div`
-    background-color : black;
+    background-color : #252527;
     width : 80%;
     height : 300px;
     border-radius:10px;
 `
-const NextArriveMinute = styled.h4`
-    display : flex;
-    justify-self : center;
-    text-align : center;
-    color : black;
-`
-function BusInform(){
+interface RouteList {
+    RouteList :{
+        station_id: number,
+		name: string,
+		up_down: false,
+		order: number
+    }
+}
+
+function BusInformPage(){
+    const [stationId, setStationId] = useState<string>("GGB234001212")
+    const [busId, setBusId] = useState<string>("GGB234001736")
+    const [busNumber, setBusNumber] = useState<string>("")
+    const [cityCode, setCityCode] = useState<number>(31250)
+    const [cityName, setCityName] = useState<string>("")
+    const [busType, setBusType] = useState<string>("")
+    const [busColor, setBusColor] = useState<string>("")
+    const [busEpName, setBusEpName] = useState<string>("")
+    const [busSpName, setBusSpName] = useState<string>("")
+    const [busFDTime, setBusFDTime] = useState<number>(0)
+    const [busLDTime, setBusLDTime] = useState<number>(0)
+    const [busIntervalTime, setBusIntervalTime] = useState<number>(0)
+    const [busIntervalHalTime, setBusIntervalHalTime] = useState<number>(0)
+    const [busStationList, setBusStationList] = useState<RouteList[]>()
+
+    const handleInfrom = async()=>{
+        try{
+            const res = await (await axios.get(`http://localhost:8000/api/v1/route?busId=${busId}&cityCode=${cityCode}`))
+            const data = res.data.data
+            setBusNumber(data.num)
+            setCityName(data.city)
+            setBusType(data.type)
+            setBusColor(data.color)
+            setBusSpName(data.sp_nm)
+            setBusEpName(data.ep_nm)
+            setBusFDTime(data.fd_time)
+            setBusLDTime(data.ld_time)
+            setBusIntervalTime(data.interval_time)
+            setBusIntervalHalTime(data.interval_haltime)
+            return res
+        }
+        catch{return}
+    }
+    useEffect(()=>{
+        handleInfrom()
+    },[])
     return (
         <div>
             <Header/>
             <InfromBoard 
                 titleWidth={30} 
-                leftSubText="나는 공부시" 
-                midText="어쩌구저쩌구" 
-                rightSubText="나는 잠들다"
+                leftSubText={cityName}
+                midText={busNumber} 
+                rightSubText={busType+'버스'}
+                backgroundColor={busColor}
             >
             <MainContainer>
                 <LittleBoxComponent>
                     <AtomBoxComponentLeft>
-                        <BusInformBox isLeft = {true} stringInBox={"기점"} stringNextToBox={"정지"}></BusInformBox>
+                        <BusInformBox isLeft = {true} stringInBox={"기점"} stringNextToBox={busSpName}></BusInformBox>
                     </AtomBoxComponentLeft>
                     <AtomBoxComponentMid/>
                     <AtomBoxComponentRight>
-                        <BusInformBox isLeft = {false} stringInBox={"종점"} stringNextToBox="지정"></BusInformBox>
+                        <BusInformBox isLeft = {false} stringInBox={"종점"} stringNextToBox={busEpName}></BusInformBox>
                     </AtomBoxComponentRight>
                 </LittleBoxComponent>
                 <BusNotionBox/>
                 <LittleBoxComponent>
                     <AtomBoxComponentLeft>
-                        <BusInformBox isLeft = {true} stringInBox={"첫차"} stringNextToBox={"04:20"}></BusInformBox>
+                        <BusInformBox isLeft = {true} stringInBox={"첫차"} 
+                            stringNextToBox={((busFDTime/100<10)?"0":"")+Math.floor(busFDTime/100)+" : "+((busFDTime%100<10)?"0":"")+busFDTime%100 }></BusInformBox>
                     </AtomBoxComponentLeft>
                     <AtomBoxComponentMid>
-                        <NextArriveMinute>6분후 도착</NextArriveMinute>
                     </AtomBoxComponentMid>
                     <AtomBoxComponentRight>
-                        <BusInformBox isLeft = {false} stringInBox={"평일배차간격"} stringNextToBox={"12m"}></BusInformBox>
+                        <BusInformBox isLeft = {false} stringInBox={"평일배차간격"} stringNextToBox={busIntervalTime.toString()+" 분"}/>
                     </AtomBoxComponentRight>
                 </LittleBoxComponent>
                 <LittleBoxComponent>
                     <AtomBoxComponentLeft>
-                        <BusInformBox isLeft = {true} stringInBox={"막차"} stringNextToBox={"00:20"}></BusInformBox>
+                        <BusInformBox isLeft = {true} stringInBox={"막차"} 
+                            stringNextToBox={((busLDTime/100<10)?"0":"")+Math.floor(busLDTime/100)+" : "+((busLDTime%100<10)?"0":"")+busLDTime%100}/>
                     </AtomBoxComponentLeft>
                     <AtomBoxComponentMid/>
                     <AtomBoxComponentRight>
-                        <BusInformBox isLeft = {false} stringInBox={"주말배차간격"} stringNextToBox={"12m"}></BusInformBox>
+                        <BusInformBox isLeft = {false} stringInBox={"주말배차간격"} stringNextToBox={busIntervalHalTime.toString()+" 분"}></BusInformBox>
                     </AtomBoxComponentRight>
                 </LittleBoxComponent>
             </MainContainer>
@@ -104,4 +147,4 @@ function BusInform(){
     )
 }
 
-export default BusInform;
+export default BusInformPage;

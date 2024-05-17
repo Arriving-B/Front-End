@@ -52,8 +52,8 @@ const StationInfromTextBox = styled.h2`
 
 
 // 보드 좌우 블럭
-const BoardTopBetween = styled.div<{titleWidth:number;}>`
-    background-color: #20CC2B;
+const BoardTopBetween = styled.div<{titleWidth:number, backgroundColor:string;}>`
+    background-color : ${(props)=>props.backgroundColor};
     width: ${(props)=>props.titleWidth}%;
     height : 50px;
     border-radius : 20px 20px 0 0;
@@ -71,23 +71,25 @@ interface InfromBorardProps{
     leftSubText: string
     midText: string
     rightSubText : string
+    backgroundColor? : string
     children?: React.ReactNode
 }
 
-const InfromBoard : React.FC<InfromBorardProps>= ({ titleWidth, leftSubText, midText, rightSubText, children })=>{
+const InfromBoard : React.FC<InfromBorardProps>= ({ titleWidth, leftSubText, midText, rightSubText, backgroundColor, children })=>{
     let subWidth : number = (100-titleWidth)/2;
+    backgroundColor = backgroundColor?backgroundColor:"black"
     return (
         <MainBoard>
-            <BoardTopBackground>
-                <BoardTopBetween titleWidth = {subWidth}>
+            <BoardTopBackground >
+                <BoardTopBetween titleWidth = {subWidth} backgroundColor={backgroundColor}>
                     <SubStationInfomTextBox> {leftSubText} </SubStationInfomTextBox>
                 </BoardTopBetween>
 
                 <BoardTopMid titleWidth = {titleWidth}>
-                    <StationInfromTextBox> {midText} </StationInfromTextBox>
+                    <StationInfromTextBox style={{fontSize : "50px"}}> {midText} </StationInfromTextBox>
                 </BoardTopMid>
 
-                <BoardTopBetween titleWidth = {subWidth}>
+                <BoardTopBetween titleWidth = {subWidth} backgroundColor={backgroundColor}>
                     <SubStationInfomTextBox> {rightSubText} </SubStationInfomTextBox>
                 </BoardTopBetween>
             </BoardTopBackground>

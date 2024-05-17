@@ -15,7 +15,7 @@ const LittleInformBox = styled.div`
     align-items : center;
 `
 const SmallInformBox = styled.div`
-    background-color : black;
+    background-color : #252527;
     display : flex;
     align-items:center;
     width:  max-content;
@@ -37,7 +37,7 @@ const BusInformBox : React.FC<BusInformProps> = ({ isLeft = true, stringInBox, s
         <div>
             <LittleInformBox>
                 <SmallInformBox>
-                    {stringInBox}
+                    <h5>{stringInBox}</h5>
                 </SmallInformBox>
                 <TextBox>
                     <h5>{stringNextToBox}</h5>
@@ -52,7 +52,7 @@ const BusInformBox : React.FC<BusInformProps> = ({ isLeft = true, stringInBox, s
                     <h5>{stringNextToBox}</h5>
                 </TextBox>
                 <SmallInformBox>
-                    {stringInBox}
+                    <h5>{stringInBox}</h5>
                 </SmallInformBox>
                 
             </LittleInformBox>
