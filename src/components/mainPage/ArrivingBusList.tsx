@@ -1,5 +1,6 @@
 import busIcon from 'assets/mainpage/bus.png'
 import { useBusListStore } from 'store/busListStore'
+import { useStationStore } from 'store/stationStore'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -158,6 +159,7 @@ const IncomeBus = styled.img<{ stationLeft: number }>`
 
 function ArrivingBusList() {
   const { buses } = useBusListStore()
+  const { station } = useStationStore()
 
   return (
     <>
@@ -168,7 +170,7 @@ function ArrivingBusList() {
               <BusNum busColor={bus.color}>{bus.num}</BusNum>
             </BusNumBox>
             <IInnerContainer2>
-              <BoundFor>거여역3번출구.현대2차아파트 방면</BoundFor>
+              <BoundFor>방면 미지원</BoundFor>
             </IInnerContainer2>
           </InnerContainerUp>
 
@@ -179,7 +181,7 @@ function ArrivingBusList() {
             <InnerContainerUnderRight>
               <RouteNavigationContainer>
                 <Node>
-                  <p>거여역6번출구</p>
+                  <p>{station.name}</p>
                   <NodePoint nodeColor={'#f25555'} />
                 </Node>
                 <Node>
