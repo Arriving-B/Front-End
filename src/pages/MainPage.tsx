@@ -1,4 +1,4 @@
-import Header from 'components/header/Header.tsx'
+import Header from 'components/header'
 import ArrivingBusList from 'components/mainPage/ArrivingBusList'
 import styled from 'styled-components'
 
@@ -126,7 +126,7 @@ const WaitMinute = styled.p`
 function MainPage() {
   return (
     <>
-      <Header></Header>
+      <Header />
       <Background>
         <MapStationList>
           <BusList>
