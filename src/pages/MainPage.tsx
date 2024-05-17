@@ -1,5 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import axios from 'axios'
 import Header from 'components/header/Header.tsx'
 import ArrivingBusList from 'components/mainPage/ArrivingBusList'
+import { useEffect, useState } from 'react'
+import { busContent, useBusListStore } from 'store/busListStore'
+import { useStationStore } from 'store/stationStore'
 import styled from 'styled-components'
 
 const Background = styled.div`
@@ -123,52 +128,74 @@ const WaitMinute = styled.p`
   font-size: 0.9rem;
   font-weight: bold;
 `
+
 function MainPage() {
+  const [apiUrl] = useState<string>('http://localhost:8080/api/v1')
+  const { station } = useStationStore()
+  const { buses, setBuses, addBus } = useBusListStore()
+
+  const handleGetBus = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/bus?stationId=${station.id}&cityCode=${station.cityCode}`)
+      const data = response.data.data.bus_list
+      setBuses([])
+      Object.keys(data).forEach((key) => {
+        const newBus: busContent = {
+          id: data[key].bus_id,
+          num: data[key].name,
+          type: data[key].type,
+          color: data[key].color,
+          stationsLeft: data[key].station_left,
+          remainingTime: Math.floor(data[key].time_left / 60),
+        }
+        addBus(newBus)
+      })
+    } catch (err: unknown) {
+      console.error('API Error :', err)
+    }
+  }
+
+  useEffect(() => {
+    handleGetBus()
+  }, [])
+
   return (
     <>
       <Header></Header>
       <Background>
         <MapStationList>
           <BusList>
-            <BusArriveInfo>
-              <Bus color={'#55d055'}>55 </Bus>
-              <WaitMinute>8분</WaitMinute>
-            </BusArriveInfo>
-            <BusArriveInfo>
-              <Bus color={'#55d055'}>G5500 </Bus>
-              <WaitMinute>85분</WaitMinute>
-            </BusArriveInfo>
-            <BusArriveInfo>
-              <Bus color={'#5555f0'}>N4462 </Bus>
-              <WaitMinute>운행종료</WaitMinute>
-            </BusArriveInfo>
-            <BusArriveInfo>
-              <Bus color={'#f05555'}>1650 </Bus>
-              <WaitMinute>곧 도착</WaitMinute>
-            </BusArriveInfo>
+            {buses &&
+              buses.map((bus) => {
+                return (
+                  <BusArriveInfo>
+                    <Bus color={bus.color}>{bus.num}</Bus>
+                    <WaitMinute>
+                      {bus.remainingTime != -1
+                        ? bus.remainingTime <= 1
+                          ? `곧 도착`
+                          : `${bus.remainingTime}분 남음`
+                        : `?`}
+                    </WaitMinute>
+                  </BusArriveInfo>
+                )
+              })}
           </BusList>
           <MapStation>
             <ContainerCurrentBusStop>
               <CurrentBusStop>현재 정류장</CurrentBusStop>
-              <CurrentBusStopName>거여역6번출구</CurrentBusStopName>
+              <CurrentBusStopName>{station.name}</CurrentBusStopName>
             </ContainerCurrentBusStop>
             <Map>
               <Mapinfo>
                 대충 아무 정보
-                <br /> 대충 지도
+                <br />
+                대충 지도
               </Mapinfo>
             </Map>
           </MapStation>
         </MapStationList>
         <BusListArriveSoon>
-          <ArrivingBusList />
-          <ArrivingBusList />
-          <ArrivingBusList />
-          <ArrivingBusList />
-          <ArrivingBusList />
-          <ArrivingBusList />
-          <ArrivingBusList />
-          <ArrivingBusList />
           <ArrivingBusList />
         </BusListArriveSoon>
       </Background>
