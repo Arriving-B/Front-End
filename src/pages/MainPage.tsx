@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios'
-import Header from 'components/header/Header.tsx'
 import ArrivingBusList from 'components/mainPage/ArrivingBusList'
 import { useEffect, useState } from 'react'
 import { busContent, useBusListStore } from 'store/busListStore'
@@ -160,46 +159,43 @@ function MainPage() {
   }, [])
 
   return (
-    <>
-      <Header></Header>
-      <Background>
-        <MapStationList>
-          <BusList>
-            {buses &&
-              buses.map((bus) => {
-                return (
-                  <BusArriveInfo>
-                    <Bus color={bus.color}>{bus.num}</Bus>
-                    <WaitMinute>
-                      {bus.remainingTime != -1
-                        ? bus.remainingTime <= 1
-                          ? `곧 도착`
-                          : `${bus.remainingTime}분 남음`
-                        : `?`}
-                    </WaitMinute>
-                  </BusArriveInfo>
-                )
-              })}
-          </BusList>
-          <MapStation>
-            <ContainerCurrentBusStop>
-              <CurrentBusStop>현재 정류장</CurrentBusStop>
-              <CurrentBusStopName>{station.name}</CurrentBusStopName>
-            </ContainerCurrentBusStop>
-            <Map>
-              <Mapinfo>
-                대충 아무 정보
-                <br />
-                대충 지도
-              </Mapinfo>
-            </Map>
-          </MapStation>
-        </MapStationList>
-        <BusListArriveSoon>
-          <ArrivingBusList />
-        </BusListArriveSoon>
-      </Background>
-    </>
+    <Background>
+      <MapStationList>
+        <BusList>
+          {buses &&
+            buses.map((bus) => {
+              return (
+                <BusArriveInfo>
+                  <Bus color={bus.color}>{bus.num}</Bus>
+                  <WaitMinute>
+                    {bus.remainingTime != -1
+                      ? bus.remainingTime <= 1
+                        ? `곧 도착`
+                        : `${bus.remainingTime}분 남음`
+                      : `?`}
+                  </WaitMinute>
+                </BusArriveInfo>
+              )
+            })}
+        </BusList>
+        <MapStation>
+          <ContainerCurrentBusStop>
+            <CurrentBusStop>현재 정류장</CurrentBusStop>
+            <CurrentBusStopName>{station.name}</CurrentBusStopName>
+          </ContainerCurrentBusStop>
+          <Map>
+            <Mapinfo>
+              대충 아무 정보
+              <br />
+              대충 지도
+            </Mapinfo>
+          </Map>
+        </MapStation>
+      </MapStationList>
+      <BusListArriveSoon>
+        <ArrivingBusList />
+      </BusListArriveSoon>
+    </Background>
   )
 }
 
