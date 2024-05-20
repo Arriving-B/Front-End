@@ -129,7 +129,7 @@ const WaitMinute = styled.p`
 `
 
 function MainPage() {
-  const [apiUrl] = useState<string>('http://localhost:8080/api/v1')
+  const [apiUrl] = useState<string>('http://52.79.183.211/api/v1')
   const { station } = useStationStore()
   const { buses, setBuses, addBus } = useBusListStore()
 
