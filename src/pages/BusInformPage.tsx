@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 import BusInformBox from 'components/BusInform/SmallInformBox.tsx'
 import InfromBoard from 'components/InfromBoard.tsx'
@@ -9,6 +10,7 @@ import styled from 'styled-components'
 // InformBoard의 Top 외의 요소용 컨테이너
 const MainContainer = styled.div`
   background-color: white;
+
   width: 80vw;
   height: 60vh;
   display: flex;
@@ -248,3 +250,4 @@ const BusInformPage: React.FC<RouteProps> = ({ theBusColor }) => {
 }
 
 export default BusInformPage
+

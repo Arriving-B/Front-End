@@ -1,4 +1,6 @@
 import busIcon from 'assets/mainpage/bus.png'
+import { useNavigate } from 'react-router-dom'
+import { useBusDetailStore } from 'store/busDetailStore'
 import { useBusListStore } from 'store/busListStore'
 import { useStationStore } from 'store/stationStore'
 import styled from 'styled-components'
@@ -160,11 +162,19 @@ const IncomeBus = styled.img<{ stationLeft: number }>`
 function ArrivingBusList() {
   const { buses } = useBusListStore()
   const { station } = useStationStore()
+  const { setBusId } = useBusDetailStore()
+
+  const nav = useNavigate()
+
+  const handleBusDetailView = (busId: string) => {
+    setBusId(busId)
+    nav('/busInform')
+  }
 
   return (
     <>
       {buses.map((bus) => (
-        <Container>
+        <Container onClick={() => handleBusDetailView(bus.id)}>
           <InnerContainerUp>
             <BusNumBox>
               <BusNum busColor={bus.color}>{bus.num}</BusNum>
@@ -176,7 +186,13 @@ function ArrivingBusList() {
 
           <InnerContainerUnder>
             <WaitMinBox>
-              <WaitMin>{bus.remainingTime != -1 ? `${bus.remainingTime}분 후 도착` : `도착 정보 없음`}</WaitMin>
+              <WaitMin>
+                {bus.remainingTime != -1
+                  ? bus.remainingTime > 60
+                    ? `${bus.remainingTime}분 후 도착`
+                    : `곧 도착`
+                  : `도착 정보 없음`}
+              </WaitMin>
             </WaitMinBox>
             <InnerContainerUnderRight>
               <RouteNavigationContainer>
