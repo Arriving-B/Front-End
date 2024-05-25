@@ -1,5 +1,5 @@
-import gpsIconOff from 'assets/header/gps_icon_off.png'
-import gpsIconOn from 'assets/header/gps_icon_on.png'
+import gpsIconOff from 'assets/header/Gps_icon_off.png'
+import gpsIconOn from 'assets/header/Gps_icon_on.png'
 import mainIcon from 'assets/header/main_icon.png'
 import resetIcon from 'assets/header/reset_icon.png'
 import searchIcon from 'assets/header/search_icon.png'
@@ -84,6 +84,7 @@ const ResetButton = styled.span`
     height: 20px;
   }
 `
+
 const GpsButton = styled.span`
   width: 30px;
   height: 30px;
