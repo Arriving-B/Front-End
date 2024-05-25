@@ -52,7 +52,6 @@ const StationInfromTextBox = styled.h2`
 // 보드 좌우 블럭
 const BoardTopBetween = styled.div<{ titleWidth: number; backgroundColor: string }>`
   background-color: ${(props) => props.backgroundColor};
-
   width: ${(props) => props.titleWidth}%;
   height: 50px;
   border-radius: 20px 20px 0 0;
