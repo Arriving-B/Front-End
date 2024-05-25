@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { routeList, useBusrouteListStore } from 'store/busRouteListStore'
 import styled from 'styled-components'
 
+// InformBoard의 Top 외의 요소용 컨테이너
 const MainContainer = styled.div`
   background-color: white;
   width: 80vw;
@@ -13,7 +14,9 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 0 0 20px 20px;
 `
+// row 단위의 요소용 컨테이너
 const LittleBoxComponent = styled.div`
   width: 100%;
   height: 50px;
@@ -23,6 +26,7 @@ const LittleBoxComponent = styled.div`
   align-items: center;
   border-radius: 20px;
 `
+// LittleBoxComponent의 column 단위의 요소용 컨테이너들
 const AtomBoxComponentLeft = styled.div`
   width: 50%;
   height: 100%;
@@ -44,6 +48,7 @@ const AtomBoxComponentRight = styled.div`
   justify-content: end;
   align-items: center;
 `
+//busRoute 요소용 컨테이너
 const BusNotionBox = styled.div`
   background-color: #252527;
   flex-wrap: wrap; // 요소를 넘어갈시 줄 넘김
@@ -53,6 +58,7 @@ const BusNotionBox = styled.div`
   display: flex;
   justify-content: center;
 `
+//각 버스정류장 관련 정보용 컨테이너
 const RouteContainer = styled.div`
   width: 60px;
   display: flex;
@@ -60,6 +66,7 @@ const RouteContainer = styled.div`
   justify-content: start;
   margin-top: 10px;
 `
+//정류장 표시용 핀
 const StationPin = styled.div<{ busColor: string }>`
   background-color: white;
   width: 10px;
@@ -68,12 +75,14 @@ const StationPin = styled.div<{ busColor: string }>`
   //색깔입히기
   border: solid 5px ${(props) => props.busColor};
 `
+//정류장 name용 박스
 const TextBox = styled.div`
   margin-top: 4px;
   display: flex;
   justify-content: center;
   font-size: 0.4rem;
 `
+//정류장 핀용 바
 const BarBetweenStation = styled.div<{ busColor: string }>`
   background-color: white;
   width: 60px;
@@ -86,6 +95,7 @@ const BarBetweenStation = styled.div<{ busColor: string }>`
   justify-content: center;
   align-items: center;
 `
+//컬러 입히기 용 Props
 interface RouteProps {
   theBusColor?: string
 }
