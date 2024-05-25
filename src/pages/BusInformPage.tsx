@@ -1,4 +1,3 @@
-
 import axios from 'axios'
 import BusInformBox from 'components/BusInform/SmallInformBox.tsx'
 import InfromBoard from 'components/InfromBoard.tsx'
@@ -6,6 +5,7 @@ import Header from 'components/header/Header.tsx'
 import { useEffect, useState } from 'react'
 import { useBusDetailStore } from 'store/busDetailStore'
 import { RouteList, useBusRouteListStore } from 'store/busRouteListStore'
+import { useStationStore } from 'store/stationStore'
 import styled from 'styled-components'
 // 메인보드
 const MainBoard = styled.div`
@@ -116,37 +116,30 @@ interface RouteProps {
 }
 
 const BusInformPage: React.FC<RouteProps> = ({ theBusColor }) => {
-  const [stationId, setStationId] = useState<string>('GGB234001212')
-  const [busId, setBusId] = useState<string>('GGB234001736')
-  const [busNumber, setBusNumber] = useState<string>('')
-  const [cityCode, setCityCode] = useState<number>(31250)
-  const [cityName, setCityName] = useState<string>('')
-  const [busType, setBusType] = useState<string>('')
-  const [busColor, setBusColor] = useState<string>('')
-  const [busEpName, setBusEpName] = useState<string>('')
-  const [busSpName, setBusSpName] = useState<string>('')
-  const [busFDTime, setBusFDTime] = useState<number>(0)
-  const [busLDTime, setBusLDTime] = useState<number>(0)
-  const [busIntervalTime, setBusIntervalTime] = useState<number>(0)
-  const [busIntervalHalTime, setBusIntervalHalTime] = useState<number>(0)
-  const [busStationList, setBusStationList] = useState<routeList[]>([])
-
-  const { routeList, setRouteList, addRouteList } = useBusrouteListStore()
-  theBusColor = busColor
+  const [busStationList, setBusStationList] = useState<RouteList[]>([])
+  const { busDetail, setBusDetail, setBusId } = useBusDetailStore()
+  const { routeList, setRouteList, addRouteList } = useBusRouteListStore()
+  const { station } = useStationStore()
   const handleBusInform = async () => {
     try {
-      const res = await axios.get(`http://52.79.183.211/api/v1/route?busId=${busId}&cityCode=${cityCode}`)
+      const res = await axios.get(
+        `http://52.79.183.211/api/v1/route?busId=${busDetail.busId}&cityCode=${station.cityCode}`,
+      )
       const data = res.data.data
-      setBusNumber(data.num)
-      setCityName(data.city)
-      setBusType(data.type)
-      setBusColor(data.color)
-      setBusSpName(data.sp_nm)
-      setBusEpName(data.ep_nm)
-      setBusFDTime(data.fd_time)
-      setBusLDTime(data.ld_time)
-      setBusIntervalTime(data.interval_time)
-      setBusIntervalHalTime(data.interval_haltime)
+      setBusDetail({
+        busId: data.busId,
+        busNumber: data.busNumber,
+        cityCode: data.cityCode,
+        cityName: data.cityName,
+        busType: data.busType,
+        busColor: data.busColor,
+        busEpName: data.busEpName,
+        busSpName: data.busSpName,
+        busFDTime: data.busFDTime,
+        busLDTime: data.busLDTime,
+        busIntervalTime: data.busIntervalTime,
+        busIntervalHalTime: data.busIntervalHalTime,
+      })
       return res
     } catch {
       return
@@ -154,7 +147,9 @@ const BusInformPage: React.FC<RouteProps> = ({ theBusColor }) => {
   }
   const handleGetBusRoute = async () => {
     try {
-      const routeRes = await axios.get(`http://52.79.183.211/api/v1/route/map?busId=${busId}&cityCode=${cityCode}`)
+      const routeRes = await axios.get(
+        `http://52.79.183.211/api/v1/route/map?busId=${busDetail.busId}&cityCode=${station.cityCode}`,
+      )
       const routeData = routeRes.data.data.station_list
       setRouteList([])
       Object.keys(routeData).forEach((key) => {
@@ -176,25 +171,26 @@ const BusInformPage: React.FC<RouteProps> = ({ theBusColor }) => {
     routeList.map((bus) => {
       console.log(bus.name)
     })
-    console.log(busEpName)
+    console.log(busDetail.busEpName)
   }, [])
   return (
     <div>
       <Header />
-      <InfromBoard
-        titleWidth={30}
-        leftSubText={cityName}
-        midText={busNumber}
-        rightSubText={busType + '버스'}
-        backgroundColor={busColor}>
+      <MainBoard>
+        <InfromBoard
+          titleWidth={30}
+          leftText={busDetail.cityName}
+          midText={busDetail.busNumber}
+          rightText={busDetail.busType + '버스'}
+          backgroundColor={busDetail.busColor}></InfromBoard>
         <MainContainer>
           <LittleBoxComponent>
             <AtomBoxComponentLeft>
-              <BusInformBox isLeft={true} stringInBox={'기점'} stringNextToBox={busSpName}></BusInformBox>
+              <BusInformBox isLeft={true} stringInBox={'기점'} stringNextToBox={busDetail.busSpName}></BusInformBox>
             </AtomBoxComponentLeft>
             <AtomBoxComponentMid />
             <AtomBoxComponentRight>
-              <BusInformBox isLeft={false} stringInBox={'종점'} stringNextToBox={busEpName}></BusInformBox>
+              <BusInformBox isLeft={false} stringInBox={'종점'} stringNextToBox={busDetail.busEpName}></BusInformBox>
             </AtomBoxComponentRight>
           </LittleBoxComponent>
           <BusNotionBox>
@@ -218,11 +214,11 @@ const BusInformPage: React.FC<RouteProps> = ({ theBusColor }) => {
                 isLeft={true}
                 stringInBox={'첫차'}
                 stringNextToBox={
-                  (busFDTime / 100 < 10 ? '0' : '') +
-                  Math.floor(busFDTime / 100) +
+                  (busDetail.busFDTime / 100 < 10 ? '0' : '') +
+                  Math.floor(busDetail.busFDTime / 100) +
                   ' : ' +
-                  (busFDTime % 100 < 10 ? '0' : '') +
-                  (busFDTime % 100)
+                  (busDetail.busFDTime % 100 < 10 ? '0' : '') +
+                  (busDetail.busFDTime % 100)
                 }></BusInformBox>
             </AtomBoxComponentLeft>
             <AtomBoxComponentMid></AtomBoxComponentMid>
@@ -230,7 +226,7 @@ const BusInformPage: React.FC<RouteProps> = ({ theBusColor }) => {
               <BusInformBox
                 isLeft={false}
                 stringInBox={'평일배차간격'}
-                stringNextToBox={busIntervalTime.toString() + ' 분'}
+                stringNextToBox={busDetail.busIntervalTime.toString() + ' 분'}
               />
             </AtomBoxComponentRight>
           </LittleBoxComponent>
@@ -240,11 +236,11 @@ const BusInformPage: React.FC<RouteProps> = ({ theBusColor }) => {
                 isLeft={true}
                 stringInBox={'막차'}
                 stringNextToBox={
-                  (busLDTime / 100 < 10 ? '0' : '') +
-                  Math.floor(busLDTime / 100) +
+                  (busDetail.busLDTime / 100 < 10 ? '0' : '') +
+                  Math.floor(busDetail.busLDTime / 100) +
                   ' : ' +
-                  (busLDTime % 100 < 10 ? '0' : '') +
-                  (busLDTime % 100)
+                  (busDetail.busLDTime % 100 < 10 ? '0' : '') +
+                  (busDetail.busLDTime % 100)
                 }
               />
             </AtomBoxComponentLeft>
@@ -253,14 +249,13 @@ const BusInformPage: React.FC<RouteProps> = ({ theBusColor }) => {
               <BusInformBox
                 isLeft={false}
                 stringInBox={'주말배차간격'}
-                stringNextToBox={busIntervalHalTime.toString() + ' 분'}></BusInformBox>
+                stringNextToBox={busDetail.busIntervalHalTime.toString() + ' 분'}></BusInformBox>
             </AtomBoxComponentRight>
           </LittleBoxComponent>
         </MainContainer>
-      </InfromBoard>
+      </MainBoard>
     </div>
   )
 }
 
 export default BusInformPage
-

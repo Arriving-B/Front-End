@@ -1,4 +1,3 @@
-
 import Header from 'components/header/Header'
 import BusInform from 'pages/BusInformPage'
 import MainPage from 'pages/MainPage'
@@ -17,4 +16,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

@@ -13,7 +13,7 @@ interface BusRouteListState {
   addRouteList: (newRoute: RouteList) => void
 }
 
-export const useBusrouteListStore = create<BusRouteListState>((set) => ({
+export const useBusRouteListStore = create<BusRouteListState>((set) => ({
   routeList: [],
   setRouteList: (list: RouteList[]) =>
     set(() => ({
