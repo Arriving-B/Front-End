@@ -4,8 +4,19 @@ import BusInformBox from 'components/BusInform/SmallInformBox.tsx'
 import InfromBoard from 'components/InfromBoard.tsx'
 import Header from 'components/header/Header.tsx'
 import { useEffect, useState } from 'react'
-import { routeList, useBusrouteListStore } from 'store/busRouteListStore'
+import { useBusDetailStore } from 'store/busDetailStore'
+import { RouteList, useBusRouteListStore } from 'store/busRouteListStore'
 import styled from 'styled-components'
+// 메인보드
+const MainBoard = styled.div`
+  margin: 0 auto 0 auto;
+  background-color: white;
+  width: 80vw;
+  height: 60vh;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+`
 
 // InformBoard의 Top 외의 요소용 컨테이너
 const MainContainer = styled.div`
@@ -16,8 +27,10 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: start;
   border-radius: 0 0 20px 20px;
 `
+
 // row 단위의 요소용 컨테이너
 const LittleBoxComponent = styled.div`
   width: 100%;
@@ -69,7 +82,7 @@ const RouteContainer = styled.div`
   margin-top: 10px;
 `
 //정류장 표시용 핀
-const StationPin = styled.div<{ busColor: string }>`
+const StationPin = styled.div<{ busColor?: string }>`
   background-color: white;
   width: 10px;
   height: 10px;
@@ -85,7 +98,7 @@ const TextBox = styled.div`
   font-size: 0.4rem;
 `
 //정류장 핀용 바
-const BarBetweenStation = styled.div<{ busColor: string }>`
+const BarBetweenStation = styled.div<{ busColor?: string }>`
   background-color: white;
   width: 60px;
   height: 4px;
@@ -145,7 +158,7 @@ const BusInformPage: React.FC<RouteProps> = ({ theBusColor }) => {
       const routeData = routeRes.data.data.station_list
       setRouteList([])
       Object.keys(routeData).forEach((key) => {
-        const newRoute: routeList = {
+        const newRoute: RouteList = {
           stationId: routeData[key].station_id,
           name: routeData[key].name,
           upDown: routeData[key].up_down,

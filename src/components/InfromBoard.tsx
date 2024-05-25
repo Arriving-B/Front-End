@@ -1,24 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-// 메인보드
-const MainBoard = styled.div`
-  margin: 0 auto 0 auto;
-  background-color: white;
-  width: 80vw;
-  height: 60vh;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-`
-const BoardCenter = styled.div`
-  margin-top: 50px;
+const BoardTopContainer = styled.div`
   width: 100%;
-  height: 500px;
+  height: 100px;
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
-  border-radius: 0 0 20px 20px;
 `
 // 보드 상단 backBoard
 const BoardTopBackground = styled.div`
@@ -33,7 +21,7 @@ const BoardTopBackground = styled.div`
 `
 
 //보드의 가운데 블럭
-const BoardTopMid = styled.div<{ titleWidth: number }>`
+const BoardTopMidBlock = styled.div<{ titleWidth: number }>`
   background-color: #252527;
   width: ${(props) => props.titleWidth}%;
   height: 100px;
@@ -66,40 +54,33 @@ const SubStationInfomTextBox = styled.h3`
 `
 interface InfromBorardProps {
   titleWidth: number
-  leftSubText: string
+  leftText: string
   midText: string
-  rightSubText: string
+  rightText: string
   backgroundColor?: string
-  children?: React.ReactNode
 }
 
-const InfromBoard: React.FC<InfromBorardProps> = ({
-  titleWidth,
-  leftSubText,
-  midText,
-  rightSubText,
-  backgroundColor,
-  children,
-}) => {
+const InfromBoard: React.FC<InfromBorardProps> = ({ titleWidth, leftText, midText, rightText, backgroundColor }) => {
   let subWidth: number = (100 - titleWidth) / 2
   backgroundColor = backgroundColor ? backgroundColor : 'black'
   return (
-    <MainBoard>
-      <BoardTopBackground>
-        <BoardTopBetween titleWidth={subWidth} backgroundColor={backgroundColor}>
-          <SubStationInfomTextBox> {leftSubText} </SubStationInfomTextBox>
-        </BoardTopBetween>
+    <div>
+      <BoardTopContainer>
+        <BoardTopBackground>
+          <BoardTopBetween titleWidth={subWidth} backgroundColor={backgroundColor}>
+            <SubStationInfomTextBox> {leftText} </SubStationInfomTextBox>
+          </BoardTopBetween>
 
-        <BoardTopMid titleWidth={titleWidth}>
-          <StationInfromTextBox style={{ fontSize: '50px' }}> {midText} </StationInfromTextBox>
-        </BoardTopMid>
+          <BoardTopMidBlock titleWidth={titleWidth}>
+            <StationInfromTextBox style={{ fontSize: '50px' }}> {midText} </StationInfromTextBox>
+          </BoardTopMidBlock>
 
-        <BoardTopBetween titleWidth={subWidth} backgroundColor={backgroundColor}>
-          <SubStationInfomTextBox> {rightSubText} </SubStationInfomTextBox>
-        </BoardTopBetween>
-      </BoardTopBackground>
-      <BoardCenter>{children}</BoardCenter>
-    </MainBoard>
+          <BoardTopBetween titleWidth={subWidth} backgroundColor={backgroundColor}>
+            <SubStationInfomTextBox> {rightText} </SubStationInfomTextBox>
+          </BoardTopBetween>
+        </BoardTopBackground>
+      </BoardTopContainer>
+    </div>
   )
 }
 
