@@ -1,25 +1,25 @@
 import { create } from 'zustand'
 
-export interface routeList {
+export interface RouteList {
   stationId: number
   name: string
   upDown: false
   order: number
 }
 
-interface BusrouteListState {
-  routeList: Array<routeList>
-  setRouteList: (list: routeList[]) => void
-  addRouteList: (newRoute: routeList) => void
+interface BusRouteListState {
+  routeList: Array<RouteList>
+  setRouteList: (list: RouteList[]) => void
+  addRouteList: (newRoute: RouteList) => void
 }
 
-export const useBusrouteListStore = create<BusrouteListState>((set) => ({
+export const useBusrouteListStore = create<BusRouteListState>((set) => ({
   routeList: [],
-  setRouteList: (list: routeList[]) =>
+  setRouteList: (list: RouteList[]) =>
     set(() => ({
       routeList: list,
     })),
-  addRouteList: (newRoute: routeList) =>
+  addRouteList: (newRoute: RouteList) =>
     set((state) => {
       if (state.routeList.includes(newRoute)) {
         return {
