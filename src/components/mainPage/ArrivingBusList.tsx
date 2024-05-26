@@ -44,7 +44,6 @@ const BusNumBox = styled.div`
 `
 
 const IInnerContainer2 = styled.div`
-  background-color: white;
   width: 75%;
   height: 100%;
   display: flex;
@@ -58,7 +57,6 @@ const BusNum = styled.p<{ busColor: string }>`
 `
 const BoundFor = styled.p`
   margin: 0;
-  background-color: transparent;
   color: #252527;
   padding-inline: 10px;
   height: 70%;
@@ -94,7 +92,6 @@ const InnerContainerUnderRight = styled.div`
 `
 const RouteNavigationContainer = styled.div`
   position: relative;
-  background-color: transparent;
   width: 100%;
   height: 70%;
   display: flex;
@@ -133,7 +130,6 @@ const NodeWay = styled.div`
   left: 12%;
   background-color: white;
   border: solid 5px #44d044;
-  z-index: 0;
 `
 const IncomeBusWay = styled.div`
   position: absolute;
@@ -143,7 +139,6 @@ const IncomeBusWay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
 `
 const IncomeBus = styled.img<{ stationLeft: number }>`
   position: relative;
@@ -154,58 +149,53 @@ const IncomeBus = styled.img<{ stationLeft: number }>`
   background-color: #f25555;
   outline: solid 1px #f25555;
   border-radius: 100%;
-  z-index: 2;
 `
 
 function ArrivingBusList() {
   const { buses } = useBusListStore()
   const { station } = useStationStore()
 
-  return (
-    <>
-      {buses.map((bus) => (
-        <Container>
-          <InnerContainerUp>
-            <BusNumBox>
-              <BusNum busColor={bus.color}>{bus.num}</BusNum>
-            </BusNumBox>
-            <IInnerContainer2>
-              <BoundFor>방면 미지원</BoundFor>
-            </IInnerContainer2>
-          </InnerContainerUp>
+  return buses.map((bus) => (
+    <Container key={bus.id}>
+      <InnerContainerUp>
+        <BusNumBox>
+          <BusNum busColor={bus.color}>{bus.num}</BusNum>
+        </BusNumBox>
+        <IInnerContainer2>
+          <BoundFor>방면 미지원</BoundFor>
+        </IInnerContainer2>
+      </InnerContainerUp>
 
-          <InnerContainerUnder>
-            <WaitMinBox>
-              <WaitMin>{bus.remainingTime != -1 ? `${bus.remainingTime}분 후 도착` : `도착 정보 없음`}</WaitMin>
-            </WaitMinBox>
-            <InnerContainerUnderRight>
-              <RouteNavigationContainer>
-                <Node>
-                  <p>{station.name}</p>
-                  <NodePoint nodeColor={'#f25555'} />
-                </Node>
-                <Node>
-                  <NodePoint nodeColor={'#55d055'} />
-                </Node>
-                <Node>
-                  <NodePoint nodeColor={'#55d055'} />
-                </Node>
-                <Node>
-                  <NodePoint nodeColor={'#55d055'} />
-                </Node>
-                <NodeWay />
-                {bus.stationsLeft != -1 && (
-                  <IncomeBusWay>
-                    <IncomeBus src={busIcon} stationLeft={bus.stationsLeft > 3 ? 3.15 : bus.stationsLeft} />
-                  </IncomeBusWay>
-                )}
-              </RouteNavigationContainer>
-            </InnerContainerUnderRight>
-          </InnerContainerUnder>
-        </Container>
-      ))}
-    </>
-  )
+      <InnerContainerUnder>
+        <WaitMinBox>
+          <WaitMin>{bus.remainingTime != -1 ? `${bus.remainingTime}분 후 도착` : `도착 정보 없음`}</WaitMin>
+        </WaitMinBox>
+        <InnerContainerUnderRight>
+          <RouteNavigationContainer>
+            <Node>
+              <p>{station.name}</p>
+              <NodePoint nodeColor={'#f25555'} />
+            </Node>
+            <Node>
+              <NodePoint nodeColor={'#55d055'} />
+            </Node>
+            <Node>
+              <NodePoint nodeColor={'#55d055'} />
+            </Node>
+            <Node>
+              <NodePoint nodeColor={'#55d055'} />
+            </Node>
+            <NodeWay />
+            {bus.stationsLeft != -1 && (
+              <IncomeBusWay>
+                <IncomeBus src={busIcon} stationLeft={bus.stationsLeft > 3 ? 3.15 : bus.stationsLeft} />
+              </IncomeBusWay>
+            )}
+          </RouteNavigationContainer>
+        </InnerContainerUnderRight>
+      </InnerContainerUnder>
+    </Container>
+  ))
 }
 
 export default ArrivingBusList

@@ -1,4 +1,4 @@
-import Header from 'components/header/Header'
+import Header from 'components/header'
 import BusInform from 'pages/BusInformPage'
 import MainPage from 'pages/MainPage'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
@@ -16,4 +16,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

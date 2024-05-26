@@ -1,6 +1,5 @@
 import BusInformBox from 'components/BusInform/SmallInformBox.tsx'
 import InfromBoard from 'components/InfromBoard.tsx'
-import Header from 'components/header/Header.tsx'
 import styled from 'styled-components'
 
 const MainContainer = styled.div`
@@ -56,7 +55,6 @@ const NextArriveMinute = styled.h4`
 function BusInform() {
   return (
     <div>
-      <Header />
       <InfromBoard titleWidth={30} leftSubText="나는 공부시" midText="어쩌구저쩌구" rightSubText="나는 잠들다">
         <MainContainer>
           <LittleBoxComponent>
